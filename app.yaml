@@ -2,4 +2,4 @@ runtime: python27
 threadsafe: true
 handlers:
 - url: /.*
-script: main.py
+script: main.app
