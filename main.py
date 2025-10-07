@@ -21,13 +21,10 @@ class MainPage(webapp2.RequestHandler):
             return
 
         url = "https://api.postalpincode.in/pincode/" + pincode
-        try:
-            response = urllib.urlopen(url)
-            data = json.loads(response.read())
-        except:
-            data = []
+        data = urllib.urlopen(url).read()
+        data = json.loads(data)
 
-        if data and data[0]['Status'] == 'Success':
+        if data[0]['Status'] == 'Success':
             post_office = data[0]['PostOffice'][0]['State']
             name = data[0]['PostOffice'][0]['Name']
             block = data[0]['PostOffice'][0]['Block']
@@ -39,7 +36,7 @@ class MainPage(webapp2.RequestHandler):
                 "block": block,
                 "district": district
             }
-            path = os.path.join(os.path.dirname(__file__), 'results.html')
+            path = os.path.join(os.path.dirname(__file__), 'result.html')
             self.response.out.write(template.render(path, template_values))
         else:
             template_values = {}
